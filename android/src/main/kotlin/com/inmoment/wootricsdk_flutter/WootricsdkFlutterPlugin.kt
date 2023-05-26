@@ -29,6 +29,19 @@ class WootricsdkFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     channel.setMethodCallHandler(this)
   }
 
+  Long? parseLong(Object val){
+    if (val == null)
+      return null;
+
+    if (val is Long)
+      return val;
+
+    if (val is Int)
+      return val.toLong();
+
+    return null;
+  }
+
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method.equals("getPlatformVersion")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE)
@@ -53,7 +66,7 @@ class WootricsdkFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       val value = forceSurvey ?: false
       wootric?.setSurveyImmediately(value)
     } else if (call.method.equals("setEndUserCreatedAt")) {
-      val endUserCreatedAt: Long? = call.argument("endUserCreatedAt")
+      val endUserCreatedAt: Long? = parseLong(call.argument("endUserCreatedAt"))
       if (endUserCreatedAt != null) {
         wootric?.setEndUserCreatedAt(endUserCreatedAt)
       }
