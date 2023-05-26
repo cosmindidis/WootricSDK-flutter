@@ -29,7 +29,7 @@ class WootricsdkFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     channel.setMethodCallHandler(this)
   }
 
-  fun parseLong(value: Any): Long? {
+  fun parseLong(value: Any?): Long? {
     if (value == null)
       return null;
 
